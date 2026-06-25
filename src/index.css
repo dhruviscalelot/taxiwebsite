@@ -1,0 +1,124 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white font-pop text-dark;
+  }
+}
+
+@layer components {
+  .wrapper {
+    @apply max-w-[1440px] mx-auto px-4 sm:px-5 lg:px-8;
+  }
+
+  .anim {
+    @apply transition-all duration-300;
+  }
+
+  .nav_link {
+    @apply px-3 py-2 rounded-full text-14 2xl:text-16 font-semibold text-g4 hover:text-dark hover:bg-primary/10 anim;
+  }
+
+  .nav_link_active {
+    @apply text-dark bg-primary/15;
+  }
+
+  .mobile_nav_link {
+    @apply w-full flex items-center justify-between px-4 py-3 rounded-xl text-14 font-semibold text-dark hover:bg-primary/15 anim;
+  }
+
+  .btn_primary {
+    @apply inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-14 2xl:text-16 font-bold text-dark border border-primary hover:bg-dark hover:text-white hover:border-dark anim;
+  }
+
+  .btn_outline {
+    @apply inline-flex items-center justify-center rounded-full border border-line px-5 py-2.5 text-14 2xl:text-16 font-semibold text-dark hover:border-primary hover:bg-primary/10 anim;
+  }
+}
+
+
+/* PrimeReact Calendar clean UI */
+.p-calendar {
+  width: 100%;
+}
+
+.p-calendar input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b1727;
+}
+
+.p-calendar input::placeholder {
+  color: #748194;
+}
+
+.p-calendar .p-button {
+  background: transparent;
+  border: 0;
+  color: #0b1727;
+  box-shadow: none;
+}
+
+/* Phone input clean UI */
+.phone_box .react-tel-input {
+  width: 100%;
+}
+
+.phone_box .react-tel-input .form-control {
+  width: 100%;
+  height: auto;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b1727;
+}
+
+.phone_box .react-tel-input .flag-dropdown {
+  border: 0;
+  background: transparent;
+}
+
+.phone_box .react-tel-input .selected-flag {
+  background: transparent;
+}
+
+/* MUI Time Picker clean UI */
+.timer .MuiInputBase-root {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.timer .MuiOutlinedInput-notchedOutline {
+  border: 0;
+}
+
+.timer input {
+  padding: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b1727;
+}
+
+
+/* this css service section for the mobile responsive */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
