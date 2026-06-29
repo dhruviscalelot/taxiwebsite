@@ -70,18 +70,18 @@ function Header({
     <>
       <header className="sticky top-0 z-50 w-full border-b border-line bg-white/95 shadow-header backdrop-blur-xl">
         <div className="wrapper">
-          <div className="flex h-[72px] items-center justify-between lg:h-[84px]">
+          <div className="flex h-[72px] items-center justify-between xl:h-[84px]">
             {/* Logo */}
             <Link to="/" onClick={closeMenu} className="flex shrink-0 items-center">
               <img
                 src={assets?.logo}
                 alt="Taxi Cab Logo"
-                className="h-[46px] w-[145px] object-contain sm:h-[52px] sm:w-[165px] lg:h-[58px] lg:w-[185px]"
+                className="h-[46px] w-[145px] object-contain sm:h-[52px] sm:w-[165px] xl:h-[58px] xl:w-[185px]"
               />
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="ml-6 hidden flex-1 items-center justify-center xl:ml-10 lg:flex">
+            <nav className="ml-6 hidden flex-1 items-center justify-center xl:ml-10 xl:flex">
               <ul className="flex items-center">
                 {menuItems.map((item, index) => (
                   <li key={item.label} className={index !== 0 ? "ml-1 xl:ml-2" : ""}>
@@ -114,7 +114,7 @@ function Header({
             </nav>
 
             {/* Desktop CTA */}
-            <div className="ml-4 hidden shrink-0 items-center lg:flex">
+            <div className="ml-4 hidden shrink-0 items-center xl:flex">
               <a href="tel:+919999999999" className="btn_outline">
                 Call Now
               </a>
@@ -129,7 +129,7 @@ function Header({
               type="button"
               onClick={openMenu}
               aria-label="Open Menu"
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-white text-dark shadow-sm lg:hidden"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line bg-white text-dark shadow-sm xl:hidden"
             >
               <svg
                 className="h-6 w-6"
@@ -149,7 +149,7 @@ function Header({
 
       {/* Mobile Drawer */}
       <div
-        className={`fixed inset-0 z-[70] lg:hidden ${
+        className={`fixed inset-0 z-[70] xl:hidden ${
           isMobileMenuOpen ? "pointer-events-auto" : "pointer-events-none"
         }`}
       >

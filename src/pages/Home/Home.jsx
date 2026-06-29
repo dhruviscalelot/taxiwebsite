@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   BriefcaseBusiness,
+  
 } from "lucide-react";
 
 const Home = () => {
@@ -487,8 +488,8 @@ const Home = () => {
 
 
               {/* Services */}
-              <div className="-mx-4 overflow-x-auto overflow-y-visible px-4 no-scrollbar sm:-mx-5 sm:px-5 lg:mx-auto lg:max-w-[1050px] lg:overflow-visible lg:px-0">
-                <div className="flex flex-nowrap justify-start lg:flex-wrap lg:justify-center lg:-mx-3">
+              <div className="-mx-4 overflow-x-auto px-4 no-scrollbar sm:-mx-5 sm:px-5 lg:mx-auto lg:max-w-[1050px] lg:overflow-visible lg:px-0">
+                <div className="flex flex-nowrap justify-start pt-2 lg:flex-wrap lg:justify-center lg:-mx-3 lg:pt-0">
                   {[
                     {
                       title: "Regular Office",
@@ -511,7 +512,7 @@ const Home = () => {
                   ].map((item) => (
                     <div
                       key={item.title}
-                      className="w-full min-w-full shrink-0 px-3 pb-8 sm:w-[80%] sm:min-w-[80%] lg:w-1/3 lg:min-w-0"
+                      className="w-[85vw] min-w-[85vw] shrink-0 px-3 pb-8 sm:w-[48%] sm:min-w-[48%] lg:w-1/3 lg:min-w-0"
                     >
                       <div className="group relative mx-auto max-w-[330px] pt-[120px]">
                         {/* Image */}
@@ -562,6 +563,10 @@ const Home = () => {
                   ))}
                 </div>
               </div>
+
+
+              {/* why choose us section */}
+             
             </div>
           </div>
 
