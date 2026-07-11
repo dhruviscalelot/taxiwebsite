@@ -5,6 +5,7 @@ import tf2 from "../images/tf2.png"
 import s1 from "../images/s1.png"
 import s2 from "../images/s2.png"
 import s3 from "../images/s3.png"
+import whatsappIcon from "../images/whatsapp.png"
 
 export const assets = {
     logo,
@@ -13,5 +14,6 @@ export const assets = {
     tf2,
     s1,
     s2,
-    s3
+    s3,
+    whatsappIcon
 };

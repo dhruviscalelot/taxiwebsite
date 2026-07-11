@@ -19,6 +19,7 @@ export default {
         g6: "#748194",
         light: "#F8FAFC",
         line: "#E8EEF5",
+
       },
 
       fontSize: {

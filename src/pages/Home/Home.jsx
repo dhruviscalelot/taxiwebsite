@@ -14,8 +14,11 @@ import {
   ChevronLeft,
   ChevronRight,
   BriefcaseBusiness,
-  
+  IndianRupee,
+  Headphones,
+
 } from "lucide-react";
+import ContactUs from "../../components/ContactUs";
 
 const Home = () => {
   return (
@@ -172,24 +175,6 @@ const Home = () => {
         {/* About + How It Works Section */}
         <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20 2xl:py-24">
           <div className="wrapper relative z-10">
-
-            {/* Top Heading */}
-            {/* <div className="mx-auto mb-8 max-w-[780px] text-center sm:mb-12">
-              <span className="inline-flex items-center rounded-full bg-primary/15 px-4 py-2 text-12 font-bold text-dark sm:text-14">
-                <CarFront size={18} className="mr-2 text-primary" />
-                About Taxi Car Rentals
-              </span>
-
-              <h2 className="mt-4 text-30 font-extrabold leading-tight text-dark sm:text-36 lg:text-48">
-                Comfortable Rides, Reliable Travel,
-                <span className="block text-primary">Across India</span>
-              </h2>
-
-              <p className="mx-auto mt-4 max-w-[650px] text-14 font-medium leading-7 text-g4 sm:text-16">
-                Choose Taxi for city rides, intercity trips, road journeys and
-                premium travel experiences.
-              </p>
-            </div> */}
 
             {/* Cards */}
             <div className="flex flex-wrap -mx-2.5 xl:-mx-3.5">
@@ -566,7 +551,86 @@ const Home = () => {
 
 
               {/* why choose us section */}
-             
+              <section className="py-12 sm:py-14 lg:py-16 mt-12 ">
+                <div className="wrapper">
+                  {/* Heading */}
+                  <div className="mx-auto max-w-[760px] text-center">
+                    <h2 className="text-30 font-extrabold text-dark sm:text-36 lg:text-40">
+                      Why Choose Us?
+                    </h2>
+
+                    <p className="mx-auto mt-3 max-w-[620px] text-14 font-medium leading-7 text-g6 sm:text-16">
+                      We make every ride safe, comfortable, and easy with trusted cab service
+                      for city rides, airport transfers, and outstation trips.
+                    </p>
+                  </div>
+
+                  {/* Cards */}
+                  <div className="mt-8 flex flex-wrap -mx-2">
+                    {[
+                      {
+                        title: "Safe & Clean Cars",
+                        text: "Well-maintained vehicles for a comfortable journey.",
+                        icon: <CarFront size={24} />,
+                      },
+                      {
+                        title: "Transparent Pricing",
+                        text: "Clear fare details with no hidden charges.",
+                        icon: <IndianRupee size={24} />,
+                      },
+                      {
+                        title: "Trusted Service",
+                        text: "Reliable cab service for local and outstation travel.",
+                        icon: <ShieldCheck size={24} />,
+                      },
+                      {
+                        title: "24/7 Support",
+                        text: "Quick customer support whenever you need help.",
+                        icon: <Headphones size={24} />,
+                      },
+                    ].map((item) => (
+                      <div key={item.title} className="w-full px-2 pb-4 sm:w-1/2 lg:w-1/4">
+                        <div className="h-full rounded-[24px] bg-white p-5 text-center shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(11,23,39,0.12)]">
+                          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/15 text-primary">
+                            {item.icon}
+                          </div>
+
+                          <h3 className="mt-4 text-16 font-extrabold text-dark">
+                            {item.title}
+                          </h3>
+
+                          <p className="mt-2 text-12 font-medium leading-6 text-g6 sm:text-14">
+                            {item.text}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <div className="mx-auto mt-6 max-w-[760px] rounded-[26px] bg-dark px-5 py-6 text-center sm:px-8">
+                    <h3 className="text-22 font-extrabold text-white sm:text-28">
+                      Ready for a Comfortable Ride?
+                    </h3>
+
+                    <p className="mx-auto mt-2 max-w-[560px] text-14 font-medium leading-7 text-white/70">
+                      Book your taxi easily and enjoy a smooth travel experience.
+                    </p>
+
+                    <button type="button" className="btn_primary mt-5">
+                      Book Taxi
+                      <ArrowRight size={18} className="ml-2" />
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+
+              {/* contact us section */}
+              <div>
+                  <ContactUs/>
+              </div>
+
             </div>
           </div>
 
