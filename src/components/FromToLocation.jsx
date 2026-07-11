@@ -11,7 +11,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { MapPin, MapPinned } from "lucide-react";
-
+import CustomDropdown from "../components/UI/CustomDropdown";
 
 function FromToLocation({ modifyTripData }) {
     const PhoneInput = PhoneInputModule.default || PhoneInputModule;
@@ -21,6 +21,7 @@ function FromToLocation({ modifyTripData }) {
         return City.getCitiesOfCountry("IN")?.map((city) => ({
             label: `${city.name}, ${city.stateCode}`,
             value: city.name,
+            stateCode: city.stateCode,
             lat: city.latitude,
             lng: city.longitude,
         }));
@@ -72,11 +73,9 @@ function FromToLocation({ modifyTripData }) {
         mobile: Yup.string().required("Mobile number is required"),
     });
 
-    const handleCityChange = (e, fieldName, setFieldValue) => {
-        const value = e.target.value;
-        const selectedCity = indianCities.find((city) => city.value === value);
-
+    const updateCityValue = (value, fieldName, setFieldValue) => {
         setFieldValue(fieldName, value);
+        const selectedCity = indianCities.find((city) => city.value === value);
 
         if (selectedCity) {
             if (fieldName === "origin_name") {
@@ -86,6 +85,18 @@ function FromToLocation({ modifyTripData }) {
                 setFieldValue("dest_lat", selectedCity.lat);
                 setFieldValue("dest_lng", selectedCity.lng);
             }
+        }
+    };
+
+    const selectCity = (city, fieldName, setFieldValue) => {
+        setFieldValue(fieldName, city.value);
+
+        if (fieldName === "origin_name") {
+            setFieldValue("origin_lat", city.lat);
+            setFieldValue("origin_lng", city.lng);
+        } else {
+            setFieldValue("dest_lat", city.lat);
+            setFieldValue("dest_lng", city.lng);
         }
     };
 
@@ -132,24 +143,26 @@ function FromToLocation({ modifyTripData }) {
                                 From
                             </label>
 
-                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
-                                <MapPin
-                                    size={20}
-                                    strokeWidth={2.5}
-                                    className="mr-2 shrink-0 text-primary"
-                                />
-
-                                <input
-                                    list="city-list"
-                                    name="origin_name"
-                                    value={values.origin_name}
-                                    onChange={(e) =>
-                                        handleCityChange(e, "origin_name", setFieldValue)
-                                    }
-                                    placeholder="Pickup location"
-                                    className="w-full bg-transparent text-14 font-semibold text-[#0B1727] outline-none"
-                                />
-                            </div>
+                            <CustomDropdown
+                                icon={
+                                    <MapPin
+                                        size={20}
+                                        strokeWidth={2.5}
+                                        className="mr-2 shrink-0 text-primary"
+                                    />
+                                }
+                                name="origin_name"
+                                value={values.origin_name}
+                                placeholder="Pickup location"
+                                cities={indianCities}
+                                onType={(value) =>
+                                    updateCityValue(value, "origin_name", setFieldValue)
+                                }
+                                onSelect={(city) =>
+                                    selectCity(city, "origin_name", setFieldValue)
+                                }
+                                onTouched={() => setFieldTouched("origin_name", true)}
+                            />
 
                             <ErrorMessage
                                 name="origin_name"
@@ -164,24 +177,26 @@ function FromToLocation({ modifyTripData }) {
                                 To
                             </label>
 
-                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
-                                <MapPinned
-                                    size={20}
-                                    strokeWidth={2.5}
-                                    className="mr-2 shrink-0 text-primary"
-                                />
-
-                                <input
-                                    list="city-list"
-                                    name="dest_name"
-                                    value={values.dest_name}
-                                    onChange={(e) =>
-                                        handleCityChange(e, "dest_name", setFieldValue)
-                                    }
-                                    placeholder="Drop location"
-                                    className="w-full bg-transparent text-14 font-semibold text-[#0B1727] outline-none"
-                                />
-                            </div>
+                            <CustomDropdown
+                                icon={
+                                    <MapPinned
+                                        size={20}
+                                        strokeWidth={2.5}
+                                        className="mr-2 shrink-0 text-primary"
+                                    />
+                                }
+                                name="dest_name"
+                                value={values.dest_name}
+                                placeholder="Drop location"
+                                cities={indianCities}
+                                onType={(value) =>
+                                    updateCityValue(value, "dest_name", setFieldValue)
+                                }
+                                onSelect={(city) =>
+                                    selectCity(city, "dest_name", setFieldValue)
+                                }
+                                onTouched={() => setFieldTouched("dest_name", true)}
+                            />
 
                             <ErrorMessage
                                 name="dest_name"
@@ -286,14 +301,6 @@ function FromToLocation({ modifyTripData }) {
                             />
                         </div>
                     </div>
-
-                    <datalist id="city-list">
-                        {indianCities?.map((city, index) => (
-                            <option key={index} value={city.value}>
-                                {city.label}
-                            </option>
-                        ))}
-                    </datalist>
 
                     <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between">
                         <p className="text-center text-12 font-medium text-[#4D5969] sm:mr-4 sm:text-left sm:text-14">

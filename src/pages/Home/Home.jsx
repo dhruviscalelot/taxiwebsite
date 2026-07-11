@@ -27,7 +27,7 @@ const Home = () => {
 
       <div className="w-full">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-[#FFF7EA] pt-10 pb-14 sm:pt-14 lg:pt-20 lg:pb-20">
+        <section className="relative z-20 overflow-visible bg-[#FFF7EA] pt-10 pb-14 sm:pt-14 lg:pt-20 lg:pb-20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(251,176,59,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(11,23,39,0.10),transparent_35%)]" />
 
           <div className="wrapper relative z-10">
@@ -173,7 +173,7 @@ const Home = () => {
 
 
         {/* About + How It Works Section */}
-        <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20 2xl:py-24">
+        <section className="relative z-0 overflow-hidden bg-white py-12 sm:py-16 lg:py-20 2xl:py-24">
           <div className="wrapper relative z-10">
 
             {/* Cards */}
