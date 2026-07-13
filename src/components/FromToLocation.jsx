@@ -28,16 +28,6 @@ function FromToLocation({ modifyTripData }) {
         }));
     }, []);
 
-    const getDefaultTime = () => {
-        const now = new Date();
-        now.setHours(now.getHours() + 1);
-
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-
-        return `${hours}:${minutes}`;
-    };
-
     const formatDate = (date) => {
         if (!date) return "";
 
@@ -59,7 +49,7 @@ function FromToLocation({ modifyTripData }) {
         dest_lng: modifyTripData?.destinations?.[0]?.dest_lng || "",
         extra_destinations: modifyTripData?.destinations?.slice(1) || [],
         pickup_date: modifyTripData?.pickup_date || "",
-        // pickup_time: modifyTripData?.pickup_time || getDefaultTime(),
+        return_date: modifyTripData?.return_date || "",
         mobile: modifyTripData?.mobile || "",
         country_code: modifyTripData?.country_code || "+91",
         country_wise_contact: modifyTripData?.country_wise_contact || {},
@@ -76,8 +66,9 @@ function FromToLocation({ modifyTripData }) {
                 dest_name: Yup.string().required("To location is required"),
             })
         ),
-        pickup_date: Yup.mixed().required("Pickup date is required"),
-        pickup_time: Yup.string().required("Pickup time is required"),
+        // pickup_date: Yup.mixed().required("Pickup date is required"),
+        // return_date: Yup.mixed().required("Return date is required"),
+        // pickup_time: Yup.string().required("Pickup time is required"),
         mobile: Yup.string().required("Mobile number is required"),
     });
 
@@ -185,6 +176,7 @@ function FromToLocation({ modifyTripData }) {
                 ...extraDestinations,
             ],
             pickup_date: formatDate(values.pickup_date),
+            return_date: formatDate(values.return_date),
             pickup_time: values.pickup_time,
             mobile: values.mobile,
             country_code: values.country_code,
@@ -497,6 +489,36 @@ function FromToLocation({ modifyTripData }) {
                                 className="mt-1 block text-12 text-red-500"
                             />
                         </div>
+
+
+
+                        {/* Return Date for only round trips */}
+                        {values.trip_type === "round_trip" && (
+                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                            <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
+                                Return Date
+                            </label>
+
+                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                                <Calendar
+                                    name="return_date"
+                                    value={values.return_date}
+                                    minDate={new Date()}
+                                    onChange={(e) => setFieldValue("return_date", e.value)}
+                                    dateFormat="dd/mm/yy"
+                                    placeholder="Select date"
+                                    showIcon
+                                    className="w-full"
+                                />
+                            </div>
+
+                            <ErrorMessage
+                                name="return_date"
+                                component="span"
+                                className="mt-1 block text-12 text-red-500"
+                            />
+                        </div>
+                        )}
                     </div>
 
                     <div className="mt-1 flex flex-col sm:flex-row sm:items-center sm:justify-between">
