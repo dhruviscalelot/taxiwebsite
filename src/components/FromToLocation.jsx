@@ -16,6 +16,7 @@ import CustomDropdown from "../components/UI/CustomDropdown";
 function FromToLocation({ modifyTripData }) {
     const PhoneInput = PhoneInputModule.default || PhoneInputModule;
     const navigate = useNavigate();
+    const maxDestinationFields = 5;
 
     const indianCities = useMemo(() => {
         return City.getCitiesOfCountry("IN")?.map((city) => ({
@@ -49,12 +50,14 @@ function FromToLocation({ modifyTripData }) {
     };
 
     const initialValues = {
+        trip_type: modifyTripData?.trip_type || "one_way",
         origin_name: modifyTripData?.origin_name || "",
         origin_lat: modifyTripData?.origin_lat || "",
         origin_lng: modifyTripData?.origin_lng || "",
         dest_name: modifyTripData?.destinations?.[0]?.dest_name || "",
         dest_lat: modifyTripData?.destinations?.[0]?.dest_lat || "",
         dest_lng: modifyTripData?.destinations?.[0]?.dest_lng || "",
+        extra_destinations: modifyTripData?.destinations?.slice(1) || [],
         pickup_date: modifyTripData?.pickup_date || "",
         // pickup_time: modifyTripData?.pickup_time || getDefaultTime(),
         mobile: modifyTripData?.mobile || "",
@@ -68,6 +71,11 @@ function FromToLocation({ modifyTripData }) {
     const validationSchema = Yup.object({
         origin_name: Yup.string().required("From location is required"),
         dest_name: Yup.string().required("To location is required"),
+        extra_destinations: Yup.array().of(
+            Yup.object({
+                dest_name: Yup.string().required("To location is required"),
+            })
+        ),
         pickup_date: Yup.mixed().required("Pickup date is required"),
         pickup_time: Yup.string().required("Pickup time is required"),
         mobile: Yup.string().required("Mobile number is required"),
@@ -100,13 +108,71 @@ function FromToLocation({ modifyTripData }) {
         }
     };
 
+    const addDestination = (values, setFieldValue) => {
+        const destinations = values.extra_destinations || [];
+
+        if (destinations.length + 1 >= maxDestinationFields) {
+            return;
+        }
+
+        setFieldValue("extra_destinations", [
+            ...destinations,
+            {
+                dest_name: "",
+                dest_lat: "",
+                dest_lng: "",
+            },
+        ]);
+    };
+
+    const removeDestination = (values, index, setFieldValue) => {
+        const destinations = values.extra_destinations || [];
+        setFieldValue(
+            "extra_destinations",
+            destinations.filter((_, destinationIndex) => destinationIndex !== index)
+        );
+    };
+
+    const updateExtraDestinationValue = (value, index, values, setFieldValue) => {
+        const destinations = [...(values.extra_destinations || [])];
+        const selectedCity = indianCities.find((city) => city.value === value);
+
+        destinations[index] = {
+            ...destinations[index],
+            dest_name: value,
+            dest_lat: selectedCity?.lat || "",
+            dest_lng: selectedCity?.lng || "",
+        };
+
+        setFieldValue("extra_destinations", destinations);
+    };
+
+    const selectExtraDestination = (city, index, values, setFieldValue) => {
+        const destinations = [...(values.extra_destinations || [])];
+
+        destinations[index] = {
+            ...destinations[index],
+            dest_name: city.value,
+            dest_lat: city.lat,
+            dest_lng: city.lng,
+        };
+
+        setFieldValue("extra_destinations", destinations);
+    };
+
     const handleSubmit = (values) => {
         if (values.origin_name === values.dest_name) {
             toast.error("From and To locations cannot be same");
             return;
         }
 
+        const extraDestinations =
+            values.trip_type === "round_trip"
+                ? values.extra_destinations.filter((destination) => destination.dest_name)
+                : [];
+
         const payload = {
+            trip_type: values.trip_type,
             origin_name: values.origin_name,
             origin_lat: values.origin_lat,
             origin_lng: values.origin_lng,
@@ -116,6 +182,7 @@ function FromToLocation({ modifyTripData }) {
                     dest_lat: values.dest_lat,
                     dest_lng: values.dest_lng,
                 },
+                ...extraDestinations,
             ],
             pickup_date: formatDate(values.pickup_date),
             pickup_time: values.pickup_time,
@@ -136,6 +203,37 @@ function FromToLocation({ modifyTripData }) {
         >
             {({ values, setFieldValue, setFieldTouched }) => (
                 <Form className="rounded-[28px] bg-white p-4 shadow-xl sm:p-5 lg:p-6">
+                    <div className="mb-5 flex flex-wrap justify-center items-center">
+                        <div className="px-1.5 pb-2">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setFieldValue("trip_type", "one_way");
+                                    setFieldValue("extra_destinations", []);
+                                }}
+                                className={`h-[42px] rounded-full border px-5 text-14 font-bold transition-all duration-300 ${values.trip_type === "one_way"
+                                    ? "border-primary bg-primary text-dark"
+                                    : "border-[#E8EEF5] bg-[#F8FAFC] text-[#748194] hover:border-primary hover:text-dark"
+                                    }`}
+                            >
+                                One Way
+                            </button>
+                        </div>
+
+                        <div className="px-1.5 pb-2">
+                            <button
+                                type="button"
+                                onClick={() => setFieldValue("trip_type", "round_trip")}
+                                className={`h-[42px] rounded-full border px-5 text-14 font-bold transition-all duration-300 ${values.trip_type === "round_trip"
+                                    ? "border-primary bg-primary text-dark"
+                                    : "border-[#E8EEF5] bg-[#F8FAFC] text-[#748194] hover:border-primary hover:text-dark"
+                                    }`}
+                            >
+                                Round Trip
+                            </button>
+                        </div>
+                    </div>
+
                     <div className="flex flex-wrap -mx-2">
                         {/* From */}
                         <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
@@ -173,9 +271,22 @@ function FromToLocation({ modifyTripData }) {
 
                         {/* To */}
                         <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
-                            <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
-                                To
-                            </label>
+                            <div className="mb-2 flex items-center justify-between">
+                                <label className="block text-12 font-bold uppercase tracking-wide text-[#748194]">
+                                    To
+                                </label>
+
+                                {values.trip_type === "round_trip" &&
+                                    values.extra_destinations.length + 1 < maxDestinationFields && (
+                                        <button
+                                            type="button"
+                                            onClick={() => addDestination(values, setFieldValue)}
+                                            className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-primary hover:bg-primary"
+                                        >
+                                            +
+                                        </button>
+                                    )}
+                            </div>
 
                             <CustomDropdown
                                 icon={
@@ -204,6 +315,92 @@ function FromToLocation({ modifyTripData }) {
                                 className="mt-1 block text-12 text-red-500"
                             />
                         </div>
+
+                        {values.trip_type === "round_trip" &&
+                            values.extra_destinations.map((destination, index) => (
+                                <div
+                                    key={index}
+                                    className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5"
+                                >
+                                    <div className="mb-2 flex items-center justify-between">
+                                        <label className="block text-12 font-bold uppercase tracking-wide text-[#748194]">
+                                            To
+                                        </label>
+
+                                        <div className="flex items-center -mx-0.5">
+                                            <div className="px-0.5">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        removeDestination(values, index, setFieldValue)
+                                                    }
+                                                    className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-red-400 hover:bg-red-50 hover:text-red-500"
+                                                >
+                                                    -
+                                                </button>
+                                            </div>
+
+                                            {values.extra_destinations.length + 1 <
+                                                maxDestinationFields &&
+                                                index === values.extra_destinations.length - 1 && (
+                                                    <div className="px-0.5">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                addDestination(values, setFieldValue)
+                                                            }
+                                                            className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-primary hover:bg-primary"
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                )}
+                                        </div>
+                                    </div>
+
+                                    <CustomDropdown
+                                        icon={
+                                            <MapPinned
+                                                size={20}
+                                                strokeWidth={2.5}
+                                                className="mr-2 shrink-0 text-primary"
+                                            />
+                                        }
+                                        name={`extra_destinations.${index}.dest_name`}
+                                        value={destination.dest_name}
+                                        placeholder="Drop location"
+                                        cities={indianCities}
+                                        onType={(value) =>
+                                            updateExtraDestinationValue(
+                                                value,
+                                                index,
+                                                values,
+                                                setFieldValue
+                                            )
+                                        }
+                                        onSelect={(city) =>
+                                            selectExtraDestination(
+                                                city,
+                                                index,
+                                                values,
+                                                setFieldValue
+                                            )
+                                        }
+                                        onTouched={() =>
+                                            setFieldTouched(
+                                                `extra_destinations.${index}.dest_name`,
+                                                true
+                                            )
+                                        }
+                                    />
+
+                                    <ErrorMessage
+                                        name={`extra_destinations.${index}.dest_name`}
+                                        component="span"
+                                        className="mt-1 block text-12 text-red-500"
+                                    />
+                                </div>
+                            ))}
 
                         {/* Pickup Date */}
                         <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">

@@ -172,6 +172,8 @@ const Home = () => {
 
 
 
+
+
         {/* About + How It Works Section */}
         <section className="relative z-0 overflow-hidden bg-white py-12 sm:py-16 lg:py-20 2xl:py-24">
           <div className="wrapper relative z-10">
