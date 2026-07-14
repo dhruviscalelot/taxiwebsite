@@ -12,8 +12,10 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { MapPin, MapPinned } from "lucide-react";
 import CustomDropdown from "../components/UI/CustomDropdown";
+import moment from 'moment';
 
 function FromToLocation({ modifyTripData }) {
+
     const PhoneInput = PhoneInputModule.default || PhoneInputModule;
     const navigate = useNavigate();
     const maxDestinationFields = 5;
@@ -177,13 +179,15 @@ function FromToLocation({ modifyTripData }) {
             ],
             pickup_date: formatDate(values.pickup_date),
             return_date: formatDate(values.return_date),
-            pickup_time: values.pickup_time,
+            pickup_time: values.pickup_time
+                ? moment(values.pickup_time.toDate()).format("h:mm A")
+                : "",
             mobile: values.mobile,
             country_code: values.country_code,
             country_wise_contact: values.country_wise_contact,
         };
 
-        navigate("/select-cars", { state: { trip: payload } });
+        navigate("/select-car", { state: { trip: payload } });
     };
 
     return (
@@ -494,30 +498,30 @@ function FromToLocation({ modifyTripData }) {
 
                         {/* Return Date for only round trips */}
                         {values.trip_type === "round_trip" && (
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
-                            <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
-                                Return Date
-                            </label>
+                            <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                                <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
+                                    Return Date
+                                </label>
 
-                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
-                                <Calendar
+                                <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                                    <Calendar
+                                        name="return_date"
+                                        value={values.return_date}
+                                        minDate={new Date()}
+                                        onChange={(e) => setFieldValue("return_date", e.value)}
+                                        dateFormat="dd/mm/yy"
+                                        placeholder="Select date"
+                                        showIcon
+                                        className="w-full"
+                                    />
+                                </div>
+
+                                <ErrorMessage
                                     name="return_date"
-                                    value={values.return_date}
-                                    minDate={new Date()}
-                                    onChange={(e) => setFieldValue("return_date", e.value)}
-                                    dateFormat="dd/mm/yy"
-                                    placeholder="Select date"
-                                    showIcon
-                                    className="w-full"
+                                    component="span"
+                                    className="mt-1 block text-12 text-red-500"
                                 />
                             </div>
-
-                            <ErrorMessage
-                                name="return_date"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
-                        </div>
                         )}
                     </div>
 
