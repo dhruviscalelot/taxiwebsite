@@ -1,12 +1,14 @@
 import { assets } from "../assets/images/images";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useLocation } from 'react-router-dom';
 import { BadgeCheck, Briefcase, ChevronDown, ShieldCheck, Star, UserRound } from "lucide-react";
 import { carOptions } from "../data/carOptions";
+import FromToLocation from "../components/FromToLocation";
 
 const SelectCar = () => {
 
     const { state } = useLocation();
-    const navigate = useNavigate();
+    const [showModifyForm, setShowModifyForm] = useState(false);
 
     // Static fallback data
     const staticData = {
@@ -99,7 +101,8 @@ const SelectCar = () => {
 
                             {/* Modify Booking */}
                             <button
-                                onClick={() => navigate('/', { state: { modifyTrip: trip } })}
+                                type="button"
+                                onClick={() => setShowModifyForm(true)}
                                 className="text-[14px] font-semibold text-[#FBB03B] hover:text-[#0B1727] transition-colors duration-200 whitespace-nowrap"
                             >
                                 Modify Booking
@@ -113,6 +116,14 @@ const SelectCar = () => {
 
 
             {/* ── Trip Info Bar End ── */}
+            {showModifyForm && (
+                <section className="bg-[#F8FAFC] py-5 sm:py-6">
+                    <div className="wrapper">
+                        <FromToLocation modifyTripData={trip} />
+                    </div>
+                </section>
+            )}
+
             <section className="bg-[#F8FAFC] py-6 sm:py-8 lg:py-10">
                 <div className="wrapper">
                     <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
