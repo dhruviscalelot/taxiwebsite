@@ -242,7 +242,7 @@ const SelectCar = () => {
                                         <button
                                             type="button"
                                             onClick={() => navigate("/booking", { state: { trip, car } })}
-                                            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-primary px-5 text-[14px] font-extrabold uppercase text-[#0B1727] transition-all duration-300 hover:bg-[#0B1727] hover:text-white sm:mt-0 sm:w-auto lg:mt-5 lg:w-full"
+                                            className="btn_primary mt-4 h-11 w-full uppercase sm:mt-0 sm:w-auto lg:mt-5 lg:w-full"
                                         >
                                             Select Car
                                         </button>

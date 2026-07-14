@@ -26,7 +26,7 @@ const CustomDropdown = ({
 
     return (
         <div className="relative">
-            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+            <div className="form_control">
                 {icon}
 
                 <input

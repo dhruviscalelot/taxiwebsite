@@ -38,6 +38,19 @@
   .btn_outline {
     @apply inline-flex items-center justify-center rounded-full border border-line px-5 py-2.5 text-14 2xl:text-16 font-semibold text-dark hover:border-primary hover:bg-primary/10 anim;
   }
+
+
+  .form_input {
+    @apply h-12 w-full rounded-2xl border border-line bg-light px-4 text-14 font-semibold text-dark outline-none placeholder:text-g6 focus:border-primary focus:bg-white anim;
+  }
+
+  .form_control {
+    @apply flex h-[58px] items-center rounded-2xl border border-line bg-light px-4;
+  }
+
+  .form_icon_btn {
+    @apply flex h-5 w-5 items-center justify-center rounded-full border border-line bg-white text-14 font-bold leading-none text-dark anim;
+  }
 }
 
 
@@ -123,7 +136,3 @@
   display: none;
 }
 
-
-/*start below section is for why choose us section css */
-
-/*end below section is for why choose us section css */

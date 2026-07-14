@@ -338,7 +338,7 @@ function FromToLocation({ modifyTripData }) {
                                         <button
                                             type="button"
                                             onClick={() => addDestination(values, setFieldValue)}
-                                            className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-primary hover:bg-primary"
+                                            className="form_icon_btn hover:border-primary hover:bg-primary"
                                         >
                                             +
                                         </button>
@@ -391,7 +391,7 @@ function FromToLocation({ modifyTripData }) {
                                                     onClick={() =>
                                                         removeDestination(values, index, setFieldValue)
                                                     }
-                                                    className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-red-400 hover:bg-red-50 hover:text-red-500"
+                                                    className="form_icon_btn hover:border-red-400 hover:bg-red-50 hover:text-red-500"
                                                 >
                                                     -
                                                 </button>
@@ -406,7 +406,7 @@ function FromToLocation({ modifyTripData }) {
                                                             onClick={() =>
                                                                 addDestination(values, setFieldValue)
                                                             }
-                                                            className="flex h-5 w-5 items-center justify-center rounded-full border border-[#E8EEF5] bg-white text-14 font-bold leading-none text-[#0B1727] transition-all duration-300 hover:border-primary hover:bg-primary"
+                                                            className="form_icon_btn hover:border-primary hover:bg-primary"
                                                         >
                                                             +
                                                         </button>
@@ -465,7 +465,7 @@ function FromToLocation({ modifyTripData }) {
                                 Pickup Date
                             </label>
 
-                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                            <div className="form_control">
                                 <Calendar
                                     name="pickup_date"
                                     value={values.pickup_date}
@@ -491,7 +491,7 @@ function FromToLocation({ modifyTripData }) {
                                 Pickup Time
                             </label>
 
-                            <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                            <div className="form_control">
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                                     <MobileTimePicker
                                         value={values.pickup_time}
@@ -524,7 +524,7 @@ function FromToLocation({ modifyTripData }) {
                                 Mobile No.
                             </label>
 
-                            <div className="phone_box flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                            <div className="phone_box form_control">
                                 <PhoneInput
                                     country="in"
                                     value={`${values.country_code.replace("+", "")}${values.mobile}`}
@@ -564,7 +564,7 @@ function FromToLocation({ modifyTripData }) {
                                     Return Date
                                 </label>
 
-                                <div className="flex h-[58px] items-center rounded-2xl border border-[#E8EEF5] bg-[#F8FAFC] px-4">
+                                <div className="form_control">
                                     <Calendar
                                         name="return_date"
                                         value={values.return_date}

@@ -89,9 +89,6 @@ const Booking = () => {
         resetForm({ values });
     };
 
-    const inputClass =
-        "mt-1.5 h-12 w-full rounded-2xl border border-line bg-light px-4 text-14 font-semibold text-dark outline-none transition-all duration-300 placeholder:text-g6 focus:border-primary focus:bg-white";
-
     return (
         <div className="min-h-screen bg-light">
             <header className="bg-white py-3.5">
@@ -180,7 +177,7 @@ const Booking = () => {
                                                 />
                                                 <Field
                                                     name="name"
-                                                    className={`${inputClass} pl-11`}
+                                                    className="form_input mt-1.5 pl-11"
                                                     placeholder="Enter user name"
                                                 />
                                             </div>
@@ -203,7 +200,7 @@ const Booking = () => {
                                                 <Field
                                                     name="email"
                                                     type="email"
-                                                    className={`${inputClass} pl-11`}
+                                                    className="form_input mt-1.5 pl-11"
                                                     placeholder="Enter email address"
                                                 />
                                             </div>
@@ -225,7 +222,7 @@ const Booking = () => {
                                                 />
                                                 <Field
                                                     name="mobile"
-                                                    className={`${inputClass} pl-11`}
+                                                    className="form_input mt-1.5 pl-11"
                                                     placeholder="Enter mobile number"
                                                 />
                                             </div>
@@ -247,7 +244,7 @@ const Booking = () => {
                                                 />
                                                 <Field
                                                     name="pickup_address"
-                                                    className={`${inputClass} pl-11`}
+                                                    className="form_input mt-1.5 pl-11"
                                                     placeholder="Enter pickup address"
                                                 />
                                             </div>
@@ -269,7 +266,7 @@ const Booking = () => {
                                                 />
                                                 <Field
                                                     name="drop_address"
-                                                    className={`${inputClass} pl-11`}
+                                                    className="form_input mt-1.5 pl-11"
                                                     placeholder="Enter drop address"
                                                 />
                                             </div>
