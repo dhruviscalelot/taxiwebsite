@@ -1,6 +1,7 @@
 import { assets } from "../assets/images/images";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
+import { BadgeCheck, Briefcase, ChevronDown, ShieldCheck, Star, UserRound } from "lucide-react";
+import { carOptions } from "../data/carOptions";
 
 const SelectCar = () => {
 
@@ -42,14 +43,14 @@ const SelectCar = () => {
                         <span className="whitespace-nowrap">+91 8976786567</span>
                     </div>}
                     <Link to='/' className='ml-auto'>
-                        <img className="w-full max-w-44" src={assets?.logo} alt="logo" />
+                        <img className="w-full max-w-20" src={assets?.taxilogo} alt="logo" />
                     </Link>
                 </div>
             </header>
             {/* header end */}
 
             {/* ── Trip Info Bar ── */}
-            <div className="bg-white border-b border-[#E8EEF5]">
+            <div className="bg-light border-b border-[#E8EEF5]">
                 <div className="wrapper py-3 lg:py-4">
 
                     {/* Breadcrumb */}
@@ -108,7 +109,131 @@ const SelectCar = () => {
                     </div>
                 </div>
             </div>
+
+
+
             {/* ── Trip Info Bar End ── */}
+            <section className="bg-[#F8FAFC] py-6 sm:py-8 lg:py-10">
+                <div className="wrapper">
+                    <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                        <div>
+                            <p className="text-[12px] font-bold uppercase tracking-wide text-[#748194]">
+                                Available Cabs
+                            </p>
+                            <h2 className="mt-1 text-[22px] font-extrabold text-[#0B1727] sm:text-[26px]">
+                                Choose your ride
+                            </h2>
+                        </div>
+
+                        {/* <p className="max-w-[420px] text-[13px] font-medium leading-6 text-[#4D5969] sm:text-right">
+                            Static fares shown for UI preview. Final price can update after live fare calculation.
+                        </p> */}
+                    </div>
+
+                    <div className="space-y-4">
+                        {carOptions.map((car) => (
+                            <article
+                                key={car.id}
+                                className="overflow-hidden rounded-[20px] border border-[#E8EEF5] bg-white shadow-[0_12px_35px_rgba(11,23,39,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(11,23,39,0.12)]"
+                            >
+                                <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[240px_1fr_230px] lg:items-center lg:gap-7">
+                                    <div className="relative mx-auto flex h-[150px] w-full max-w-[260px] items-center justify-center rounded-[18px] bg-[#FFF7EA] sm:h-[170px] lg:h-[155px]">
+                                        <img
+                                            src={car.image}
+                                            alt={car.name}
+                                            className="h-full w-full object-contain p-3"
+                                        />
+                                        {/* <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-[11px] font-bold text-[#0B1727] shadow-sm">
+                                            AC Cab
+                                        </span> */}
+                                    </div>
+
+                                    <div className="min-w-0">
+                                        <div className="flex flex-wrap items-center gap-2">
+                                            <h3 className="text-[20px] font-extrabold text-[#0B1727] sm:text-[22px]">
+                                                {car.name}
+                                            </h3>
+
+                                            <span className="inline-flex h-6 items-center rounded-full bg-[#0B1727] px-2 text-[11px] font-bold text-white">
+                                                {car.rating}
+                                                <Star size={12} className="ml-1 fill-[#FBB03B] text-[#FBB03B]" />
+                                            </span>
+                                        </div>
+
+                                        <p className="mt-1 text-[13px] italic text-[#4D5969]">
+                                            {car.description}
+                                        </p>
+
+                                        <div className="mt-4 grid gap-3 text-[13px] text-[#0B1727] sm:grid-cols-2">
+                                            <div className="flex items-center">
+                                                <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                                                    <UserRound size={18} />
+                                                </span>
+                                                <span className="font-semibold">{car.driverAllowance}</span>
+                                            </div>
+
+                                            <div className="flex items-center">
+                                                <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
+                                                    <ShieldCheck size={18} />
+                                                </span>
+                                                <span>
+                                                    <strong>{car.distance}</strong>
+                                                    <span className="text-[#748194]"> | Post limit: </span>
+                                                    <strong>{car.postLimit}</strong>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            className="mt-4 inline-flex items-center text-[13px] font-bold text-primary transition-colors duration-200 hover:text-[#0B1727]"
+                                        >
+                                            Inclusions and Exclusions
+                                            <ChevronDown size={16} className="ml-1" />
+                                        </button>
+                                    </div>
+
+                                    <div className="rounded-[18px] border border-[#E8EEF5] bg-[#FFFDF8] p-4 text-left sm:flex sm:items-center sm:justify-between sm:gap-4 lg:block lg:text-right">
+                                        <div>
+                                            <div className="flex items-center gap-2 sm:justify-start lg:justify-end">
+                                                <span className="inline-flex items-center text-[13px] font-extrabold text-[#09A441]">
+                                                    <BadgeCheck size={15} className="mr-1" />
+                                                    {car.offer}
+                                                </span>
+                                                <span className="text-[13px] font-bold text-[#9AA5B4] line-through">
+                                                    {car.oldPrice}
+                                                </span>
+                                            </div>
+
+                                            <p className="mt-2 text-[32px] font-extrabold leading-none text-primary sm:text-[34px]">
+                                                {car.price}
+                                            </p>
+
+                                            <p className="mt-2 text-[12px] font-semibold text-[#4D5969]">
+                                                {car.taxes}
+                                            </p>
+                                        </div>
+
+                                        <button
+                                            type="button"
+                                            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-primary px-5 text-[14px] font-extrabold uppercase text-[#0B1727] transition-all duration-300 hover:bg-[#0B1727] hover:text-white sm:mt-0 sm:w-auto lg:mt-5 lg:w-full"
+                                        >
+                                            Select Car
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center bg-[#E7F7FF] px-4 py-3 text-[13px] font-bold text-[#0B1727] sm:px-5">
+                                    <span className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-primary">
+                                        <Briefcase size={17} />
+                                    </span>
+                                    {car.addOn}
+                                </div>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
         </div>
     )
