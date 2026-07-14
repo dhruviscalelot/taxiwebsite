@@ -1,6 +1,6 @@
 import { assets } from "../assets/images/images";
 import { useState } from "react";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { BadgeCheck, Briefcase, ChevronDown, ShieldCheck, Star, UserRound } from "lucide-react";
 import { carOptions } from "../data/carOptions";
 import FromToLocation from "../components/FromToLocation";
@@ -8,6 +8,7 @@ import FromToLocation from "../components/FromToLocation";
 const SelectCar = () => {
 
     const { state } = useLocation();
+    const navigate = useNavigate();
     const [showModifyForm, setShowModifyForm] = useState(false);
 
     // Static fallback data
@@ -56,8 +57,8 @@ const SelectCar = () => {
                 <div className="wrapper py-3 lg:py-4">
 
                     {/* Breadcrumb */}
-                    <div className="mb-2 flex items-center gap-1.5 text-[12px] text-[#748194]">
-                        <Link to="/" className="hover:text-[#FBB03B] transition-colors duration-200">
+                    <div className="mb-2 flex items-center text-[12px] text-[#748194]">
+                        <Link to="/" className="mr-1.5 hover:text-[#FBB03B] transition-colors duration-200">
                             Home
                         </Link>
                         <span className="text-[#748194]">›</span>
@@ -65,7 +66,7 @@ const SelectCar = () => {
                     </div>
 
                     {/* Info Row */}
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
 
                         {/* Route */}
                         <h1 className="text-[18px] font-bold text-[#0B1727] leading-snug">
@@ -73,40 +74,42 @@ const SelectCar = () => {
                         </h1>
 
                         {/* Details + Modify */}
-                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+                        <div className="mt-3 flex flex-wrap items-center -mx-3 -mb-2 sm:mt-0">
 
                             {/* Trip Type */}
-                            <div>
+                            <div className="px-3 pb-2">
                                 <p className="text-[11px] font-semibold uppercase tracking-wide text-[#748194]">Trip Type</p>
                                 <p className="text-[14px] font-bold text-[#0B1727]">{tripTypeLabel}</p>
                             </div>
 
-                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5]" />
+                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5] mx-3 mb-2" />
 
                             {/* Pickup Date */}
-                            <div>
+                            <div className="px-3 pb-2">
                                 <p className="text-[11px] font-semibold uppercase tracking-wide text-[#748194]">Pick up</p>
                                 <p className="text-[14px] font-bold text-[#0B1727]">{pickupDate}</p>
                             </div>
 
-                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5]" />
+                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5] mx-3 mb-2" />
 
                             {/* Time */}
-                            <div>
+                            <div className="px-3 pb-2">
                                 <p className="text-[11px] font-semibold uppercase tracking-wide text-[#748194]">Time</p>
                                 <p className="text-[14px] font-bold text-[#0B1727]">{pickupTime}</p>
                             </div>
 
-                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5]" />
+                            <div className="hidden sm:block h-8 w-px bg-[#E8EEF5] mx-3 mb-2" />
 
                             {/* Modify Booking */}
-                            <button
-                                type="button"
-                                onClick={() => setShowModifyForm((isVisible) => !isVisible)}
-                                className="text-[14px] font-semibold text-[#FBB03B] hover:text-[#0B1727] transition-colors duration-200 whitespace-nowrap"
-                            >
-                                {showModifyForm ? "Close Modify" : "Modify Booking"}
-                            </button>
+                            <div className="px-3 pb-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowModifyForm((isVisible) => !isVisible)}
+                                    className="text-[14px] font-semibold text-[#FBB03B] hover:text-[#0B1727] transition-colors duration-200 whitespace-nowrap"
+                                >
+                                    {showModifyForm ? "Close Modify" : "Modify Booking"}
+                                </button>
+                            </div>
 
                         </div>
                     </div>
@@ -126,7 +129,7 @@ const SelectCar = () => {
 
             <section className="bg-[#F8FAFC] py-6 sm:py-8 lg:py-10">
                 <div className="wrapper">
-                    <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div className="mb-5 flex flex-col sm:flex-row sm:items-end sm:justify-between">
                         <div>
                             <p className="text-[12px] font-bold uppercase tracking-wide text-[#748194]">
                                 Available Cabs
@@ -147,7 +150,8 @@ const SelectCar = () => {
                                 key={car.id}
                                 className="overflow-hidden rounded-[20px] border border-[#E8EEF5] bg-white shadow-[0_12px_35px_rgba(11,23,39,0.08)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(11,23,39,0.12)]"
                             >
-                                <div className="grid gap-5 p-4 sm:p-5 lg:grid-cols-[240px_1fr_230px] lg:items-center lg:gap-7">
+                                <div className="flex flex-wrap p-4 sm:p-5 lg:items-center">
+                                    <div className="w-full pb-5 lg:w-[240px] lg:pb-0 lg:pr-7">
                                     <div className="relative mx-auto flex h-[150px] w-full max-w-[260px] items-center justify-center rounded-[18px] bg-[#FFF7EA] sm:h-[170px] lg:h-[155px]">
                                         <img
                                             src={car.image}
@@ -158,31 +162,39 @@ const SelectCar = () => {
                                             AC Cab
                                         </span> */}
                                     </div>
+                                    </div>
 
-                                    <div className="min-w-0">
-                                        <div className="flex flex-wrap items-center gap-2">
+                                    <div className="min-w-0 w-full pb-5 lg:w-[calc(100%-470px)] lg:pb-0 lg:pr-7">
+                                        <div className="flex flex-wrap items-center -mx-1 -mb-2">
+                                            <div className="px-1 pb-2">
                                             <h3 className="text-[20px] font-extrabold text-[#0B1727] sm:text-[22px]">
                                                 {car.name}
                                             </h3>
+                                            </div>
 
-                                            <span className="inline-flex h-6 items-center rounded-full bg-[#0B1727] px-2 text-[11px] font-bold text-white">
-                                                {car.rating}
-                                                <Star size={12} className="ml-1 fill-[#FBB03B] text-[#FBB03B]" />
-                                            </span>
+                                            <div className="px-1 pb-2">
+                                                <span className="inline-flex h-6 items-center rounded-full bg-[#0B1727] px-2 text-[11px] font-bold text-white">
+                                                    {car.rating}
+                                                    <Star size={12} className="ml-1 fill-[#FBB03B] text-[#FBB03B]" />
+                                                </span>
+                                            </div>
                                         </div>
 
                                         <p className="mt-1 text-[13px] italic text-[#4D5969]">
                                             {car.description}
                                         </p>
 
-                                        <div className="mt-4 grid gap-3 text-[13px] text-[#0B1727] sm:grid-cols-2">
+                                        <div className="mt-4 flex flex-wrap -mx-1.5 -mb-3 text-[13px] text-[#0B1727]">
+                                            <div className="w-full px-1.5 pb-3 sm:w-1/2">
                                             <div className="flex items-center">
                                                 <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                                                     <UserRound size={18} />
                                                 </span>
                                                 <span className="font-semibold">{car.driverAllowance}</span>
                                             </div>
+                                            </div>
 
+                                            <div className="w-full px-1.5 pb-3 sm:w-1/2">
                                             <div className="flex items-center">
                                                 <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                                                     <ShieldCheck size={18} />
@@ -192,6 +204,7 @@ const SelectCar = () => {
                                                     <span className="text-[#748194]"> | Post limit: </span>
                                                     <strong>{car.postLimit}</strong>
                                                 </span>
+                                            </div>
                                             </div>
                                         </div>
 
@@ -204,14 +217,15 @@ const SelectCar = () => {
                                         </button>
                                     </div>
 
-                                    <div className="rounded-[18px] border border-[#E8EEF5] bg-[#FFFDF8] p-4 text-left sm:flex sm:items-center sm:justify-between sm:gap-4 lg:block lg:text-right">
+                                    <div className="w-full lg:w-[230px]">
+                                    <div className="rounded-[18px] border border-[#E8EEF5] bg-[#FFFDF8] p-4 text-left sm:flex sm:items-center sm:justify-between lg:block lg:text-right">
                                         <div>
-                                            <div className="flex items-center gap-2 sm:justify-start lg:justify-end">
+                                            <div className="flex items-center sm:justify-start lg:justify-end">
                                                 <span className="inline-flex items-center text-[13px] font-extrabold text-[#09A441]">
                                                     <BadgeCheck size={15} className="mr-1" />
                                                     {car.offer}
                                                 </span>
-                                                <span className="text-[13px] font-bold text-[#9AA5B4] line-through">
+                                                <span className="ml-2 text-[13px] font-bold text-[#9AA5B4] line-through">
                                                     {car.oldPrice}
                                                 </span>
                                             </div>
@@ -227,10 +241,12 @@ const SelectCar = () => {
 
                                         <button
                                             type="button"
+                                            onClick={() => navigate("/booking", { state: { trip, car } })}
                                             className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-full bg-primary px-5 text-[14px] font-extrabold uppercase text-[#0B1727] transition-all duration-300 hover:bg-[#0B1727] hover:text-white sm:mt-0 sm:w-auto lg:mt-5 lg:w-full"
                                         >
                                             Select Car
                                         </button>
+                                    </div>
                                     </div>
                                 </div>
 

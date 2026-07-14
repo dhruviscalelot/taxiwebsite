@@ -1,7 +1,8 @@
 import React from 'react'
 import Home from "../pages/Home/Home";
-import { Navigate,Route,Routes } from 'react-router-dom';
+import { Route,Routes } from 'react-router-dom';
 import SelectCar from '../pages/SelectCar';
+import Booking from '../pages/Booking';
 
 
 function AllRoutes() {
@@ -10,6 +11,7 @@ function AllRoutes() {
        <Routes>
             <Route path="/" element={<Home/>}></Route>
             <Route path="/select-car" element={<SelectCar/>}></Route>
+            <Route path="/booking" element={<Booking/>}></Route>
        </Routes>
     )
 }
