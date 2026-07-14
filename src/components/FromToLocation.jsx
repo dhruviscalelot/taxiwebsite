@@ -42,13 +42,13 @@ function FromToLocation({ modifyTripData }) {
         return parsedDate.isValid() ? parsedDate.toDate() : "";
     };
 
-    const parseTimeValue = (time) => {
-        if (!time) return dayjs().add(1, "hour");
+    const parseTimeValue = (time, fallbackValue = dayjs().add(1, "hour")) => {
+        if (!time) return fallbackValue;
 
         if (dayjs.isDayjs(time)) return time;
 
         const parsedTime = dayjs(time, ["h:mm A", "hh:mm A", "HH:mm"], true);
-        return parsedTime.isValid() ? parsedTime : dayjs().add(1, "hour");
+        return parsedTime.isValid() ? parsedTime : fallbackValue;
     };
 
     const formatDate = (date) => {
@@ -64,21 +64,49 @@ function FromToLocation({ modifyTripData }) {
         return `${day}-${month}-${year}`;
     };
 
+    const selectedTripType = modifyTripData?.trip_type || "one_way";
+
+    const getEmptyTripValues = (tripType) => ({
+        trip_type: tripType,
+        origin_name: "",
+        origin_lat: "",
+        origin_lng: "",
+        dest_name: "",
+        dest_lat: "",
+        dest_lng: "",
+        extra_destinations: [],
+        pickup_date: "",
+        return_date: "",
+        mobile: "",
+        country_code: "+91",
+        country_wise_contact: {},
+        pickup_time: null,
+    });
+
     const initialValues = {
-        trip_type: modifyTripData?.trip_type || "one_way",
+        trip_type: selectedTripType,
         origin_name: modifyTripData?.origin_name || "",
         origin_lat: modifyTripData?.origin_lat || "",
         origin_lng: modifyTripData?.origin_lng || "",
         dest_name: modifyTripData?.destinations?.[0]?.dest_name || "",
         dest_lat: modifyTripData?.destinations?.[0]?.dest_lat || "",
         dest_lng: modifyTripData?.destinations?.[0]?.dest_lng || "",
-        extra_destinations: modifyTripData?.destinations?.slice(1) || [],
+        extra_destinations:
+            selectedTripType === "round_trip"
+                ? modifyTripData?.destinations?.slice(1) || []
+                : [],
         pickup_date: parseDateValue(modifyTripData?.pickup_date),
-        return_date: parseDateValue(modifyTripData?.return_date),
+        return_date:
+            selectedTripType === "round_trip"
+                ? parseDateValue(modifyTripData?.return_date)
+                : "",
         mobile: modifyTripData?.mobile || "",
         country_code: modifyTripData?.country_code || "+91",
         country_wise_contact: modifyTripData?.country_wise_contact || {},
-        pickup_time: parseTimeValue(modifyTripData?.pickup_time),
+        pickup_time: parseTimeValue(
+            modifyTripData?.pickup_time,
+            modifyTripData ? null : dayjs().add(1, "hour")
+        ),
     };
 
     const validationSchema = Yup.object({
@@ -174,6 +202,20 @@ function FromToLocation({ modifyTripData }) {
         setFieldValue("extra_destinations", destinations);
     };
 
+    const selectTripType = (tripType, values, setValues) => {
+        if (modifyTripData) {
+            setValues(tripType === selectedTripType ? initialValues : getEmptyTripValues(tripType));
+            return;
+        }
+
+        setValues({
+            ...values,
+            trip_type: tripType,
+            extra_destinations: tripType === "one_way" ? [] : values.extra_destinations,
+            return_date: tripType === "one_way" ? "" : values.return_date,
+        });
+    };
+
     const handleSubmit = (values) => {
         if (values.origin_name === values.dest_name) {
             toast.error("From and To locations cannot be same");
@@ -199,7 +241,8 @@ function FromToLocation({ modifyTripData }) {
                 ...extraDestinations,
             ],
             pickup_date: formatDate(values.pickup_date),
-            return_date: formatDate(values.return_date),
+            return_date:
+                values.trip_type === "round_trip" ? formatDate(values.return_date) : "",
             pickup_time: values.pickup_time
                 ? moment(values.pickup_time.toDate()).format("h:mm A")
                 : "",
@@ -218,16 +261,13 @@ function FromToLocation({ modifyTripData }) {
             onSubmit={handleSubmit}
             enableReinitialize
         >
-            {({ values, setFieldValue, setFieldTouched }) => (
+            {({ values, setFieldValue, setFieldTouched, setValues }) => (
                 <Form className="rounded-[28px] bg-white p-4 shadow-xl sm:p-5 lg:p-6">
                     <div className="mb-5 flex flex-wrap justify-center items-center">
                         <div className="px-1.5 pb-2">
                             <button
                                 type="button"
-                                onClick={() => {
-                                    setFieldValue("trip_type", "one_way");
-                                    setFieldValue("extra_destinations", []);
-                                }}
+                                onClick={() => selectTripType("one_way", values, setValues)}
                                 className={`h-[42px] rounded-full border px-5 text-14 font-bold transition-all duration-300 ${values.trip_type === "one_way"
                                     ? "border-primary bg-primary text-dark"
                                     : "border-[#E8EEF5] bg-[#F8FAFC] text-[#748194] hover:border-primary hover:text-dark"
@@ -240,7 +280,7 @@ function FromToLocation({ modifyTripData }) {
                         <div className="px-1.5 pb-2">
                             <button
                                 type="button"
-                                onClick={() => setFieldValue("trip_type", "round_trip")}
+                                onClick={() => selectTripType("round_trip", values, setValues)}
                                 className={`h-[42px] rounded-full border px-5 text-14 font-bold transition-all duration-300 ${values.trip_type === "round_trip"
                                     ? "border-primary bg-primary text-dark"
                                     : "border-[#E8EEF5] bg-[#F8FAFC] text-[#748194] hover:border-primary hover:text-dark"
