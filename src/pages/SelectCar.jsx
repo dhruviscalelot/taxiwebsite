@@ -102,10 +102,10 @@ const SelectCar = () => {
                             {/* Modify Booking */}
                             <button
                                 type="button"
-                                onClick={() => setShowModifyForm(true)}
+                                onClick={() => setShowModifyForm((isVisible) => !isVisible)}
                                 className="text-[14px] font-semibold text-[#FBB03B] hover:text-[#0B1727] transition-colors duration-200 whitespace-nowrap"
                             >
-                                Modify Booking
+                                {showModifyForm ? "Close Modify" : "Modify Booking"}
                             </button>
 
                         </div>

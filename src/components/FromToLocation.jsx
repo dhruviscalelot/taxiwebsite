@@ -7,12 +7,15 @@ import { City } from "country-state-city";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { MapPin, MapPinned } from "lucide-react";
 import CustomDropdown from "../components/UI/CustomDropdown";
 import moment from 'moment';
+
+dayjs.extend(customParseFormat);
 
 function FromToLocation({ modifyTripData }) {
 
@@ -30,10 +33,30 @@ function FromToLocation({ modifyTripData }) {
         }));
     }, []);
 
+    const parseDateValue = (date) => {
+        if (!date) return "";
+
+        if (date instanceof Date) return date;
+
+        const parsedDate = dayjs(date, ["DD-MM-YYYY", "DD/MM/YYYY", "YYYY-MM-DD"], true);
+        return parsedDate.isValid() ? parsedDate.toDate() : "";
+    };
+
+    const parseTimeValue = (time) => {
+        if (!time) return dayjs().add(1, "hour");
+
+        if (dayjs.isDayjs(time)) return time;
+
+        const parsedTime = dayjs(time, ["h:mm A", "hh:mm A", "HH:mm"], true);
+        return parsedTime.isValid() ? parsedTime : dayjs().add(1, "hour");
+    };
+
     const formatDate = (date) => {
         if (!date) return "";
 
-        const d = new Date(date);
+        const d = date instanceof Date ? date : parseDateValue(date);
+        if (!d) return "";
+
         const day = String(d.getDate()).padStart(2, "0");
         const month = String(d.getMonth() + 1).padStart(2, "0");
         const year = d.getFullYear();
@@ -50,14 +73,12 @@ function FromToLocation({ modifyTripData }) {
         dest_lat: modifyTripData?.destinations?.[0]?.dest_lat || "",
         dest_lng: modifyTripData?.destinations?.[0]?.dest_lng || "",
         extra_destinations: modifyTripData?.destinations?.slice(1) || [],
-        pickup_date: modifyTripData?.pickup_date || "",
-        return_date: modifyTripData?.return_date || "",
+        pickup_date: parseDateValue(modifyTripData?.pickup_date),
+        return_date: parseDateValue(modifyTripData?.return_date),
         mobile: modifyTripData?.mobile || "",
         country_code: modifyTripData?.country_code || "+91",
         country_wise_contact: modifyTripData?.country_wise_contact || {},
-        pickup_time: modifyTripData?.pickup_time
-            ? dayjs(modifyTripData.pickup_time, "HH:mm")
-            : dayjs().add(1, "hour"),
+        pickup_time: parseTimeValue(modifyTripData?.pickup_time),
     };
 
     const validationSchema = Yup.object({
