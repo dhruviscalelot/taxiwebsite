@@ -31,7 +31,7 @@ const Home = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(251,176,59,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(11,23,39,0.10),transparent_35%)]" />
 
           <div className="wrapper relative z-10">
-            <div className="flex flex-wrap items-center -mx-4">
+            <div className="flex flex-wrap items-start -mx-4">
               {/* Left Content */}
               <div className="w-full px-4 lg:w-[46%]">
                 <div className="text-center lg:text-left">
