@@ -17,11 +17,14 @@ import moment from 'moment';
 
 dayjs.extend(customParseFormat);
 
-function FromToLocation({ modifyTripData }) {
+function FromToLocation({ modifyTripData, homeLayout = false }) {
 
     const PhoneInput = PhoneInputModule.default || PhoneInputModule;
     const navigate = useNavigate();
     const maxDestinationFields = 5;
+    const fieldClass = homeLayout
+        ? "w-full px-2 pb-4 sm:w-1/2"
+        : "w-full px-2 pb-4 md:w-1/2 xl:w-1/5";
 
     const indianCities = useMemo(() => {
         return City.getCitiesOfCountry("IN")?.map((city) => ({
@@ -293,7 +296,7 @@ function FromToLocation({ modifyTripData }) {
 
                     <div className="flex flex-wrap -mx-2">
                         {/* From */}
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                        <div className={fieldClass}>
                             <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                 From
                             </label>
@@ -327,7 +330,7 @@ function FromToLocation({ modifyTripData }) {
                         </div>
 
                         {/* To */}
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                        <div className={fieldClass}>
                             <div className="mb-2 flex items-center justify-between">
                                 <label className="block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                     To
@@ -377,7 +380,7 @@ function FromToLocation({ modifyTripData }) {
                             values.extra_destinations.map((destination, index) => (
                                 <div
                                     key={index}
-                                    className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5"
+                                    className={fieldClass}
                                 >
                                     <div className="mb-2 flex items-center justify-between">
                                         <label className="block text-12 font-bold uppercase tracking-wide text-[#748194]">
@@ -460,7 +463,7 @@ function FromToLocation({ modifyTripData }) {
                             ))}
 
                         {/* Pickup Date */}
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                        <div className={fieldClass}>
                             <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                 Pickup Date
                             </label>
@@ -486,7 +489,7 @@ function FromToLocation({ modifyTripData }) {
                         </div>
 
                         {/* Pickup Time */}
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                        <div className={fieldClass}>
                             <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                 Pickup Time
                             </label>
@@ -519,7 +522,7 @@ function FromToLocation({ modifyTripData }) {
                         </div>
 
                         {/* Mobile */}
-                        <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                        <div className={fieldClass}>
                             <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                 Mobile No.
                             </label>
@@ -559,7 +562,7 @@ function FromToLocation({ modifyTripData }) {
 
                         {/* Return Date for only round trips */}
                         {values.trip_type === "round_trip" && (
-                            <div className="w-full px-2 pb-4 md:w-1/2 xl:w-1/5">
+                            <div className={fieldClass}>
                                 <label className="mb-2 block text-12 font-bold uppercase tracking-wide text-[#748194]">
                                     Return Date
                                 </label>

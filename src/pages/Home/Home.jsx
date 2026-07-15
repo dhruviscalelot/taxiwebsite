@@ -75,7 +75,7 @@ const Home = () => {
               </div>
 
               {/* Right Visual */}
-              <div className="mt-8 w-full px-4 lg:mt-0 lg:w-[54%]">
+              {/* <div className="mt-8 w-full px-4 lg:mt-0 lg:w-[54%]">
                 <div className="relative mx-auto w-full max-w-[560px]">
                   <div className="absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/25 blur-3xl sm:h-[360px] sm:w-[360px]" />
 
@@ -160,12 +160,14 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </div> */}
 
-            {/* Booking Form */}
-            <div className="relative z-20 mx-auto mt-8 max-w-[1180px]">
-              <FromToLocation />
+              {/* Booking Form */}
+              <div className="mt-8 w-full px-4 lg:mt-0 lg:w-[54%]">
+                <div className="relative z-20 mx-auto w-full max-w-[760px] lg:ml-auto">
+                  <FromToLocation homeLayout />
+                </div>
+              </div>
             </div>
           </div>
         </section>
