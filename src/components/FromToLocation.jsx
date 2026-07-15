@@ -23,8 +23,26 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
     const navigate = useNavigate();
     const maxDestinationFields = 5;
     const fieldClass = homeLayout
-        ? "w-full px-2 pb-4 sm:w-1/2"
+        ? "relative w-full px-2 pb-4 sm:w-1/2"
         : "w-full px-2 pb-4 md:w-1/2 xl:w-1/5";
+
+    const renderError = (name) => {
+        if (homeLayout) {
+            return (
+                <span className="absolute bottom-0 left-2 right-2 block truncate text-12 text-red-500">
+                    <ErrorMessage name={name} />
+                </span>
+            );
+        }
+
+        return (
+            <ErrorMessage
+                name={name}
+                component="span"
+                className="mt-1 block text-12 text-red-500"
+            />
+        );
+    };
 
     const indianCities = useMemo(() => {
         return City.getCitiesOfCountry("IN")?.map((city) => ({
@@ -322,11 +340,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                 onTouched={() => setFieldTouched("origin_name", true)}
                             />
 
-                            <ErrorMessage
-                                name="origin_name"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
+                            {renderError("origin_name")}
                         </div>
 
                         {/* To */}
@@ -369,11 +383,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                 onTouched={() => setFieldTouched("dest_name", true)}
                             />
 
-                            <ErrorMessage
-                                name="dest_name"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
+                            {renderError("dest_name")}
                         </div>
 
                         {values.trip_type === "round_trip" &&
@@ -454,11 +464,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                         }
                                     />
 
-                                    <ErrorMessage
-                                        name={`extra_destinations.${index}.dest_name`}
-                                        component="span"
-                                        className="mt-1 block text-12 text-red-500"
-                                    />
+                                    {renderError(`extra_destinations.${index}.dest_name`)}
                                 </div>
                             ))}
 
@@ -481,11 +487,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                 />
                             </div>
 
-                            <ErrorMessage
-                                name="pickup_date"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
+                            {renderError("pickup_date")}
                         </div>
 
                         {/* Pickup Time */}
@@ -514,11 +516,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                 </LocalizationProvider>
                             </div>
 
-                            <ErrorMessage
-                                name="pickup_time"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
+                            {renderError("pickup_time")}
                         </div>
 
                         {/* Mobile */}
@@ -551,11 +549,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                 />
                             </div>
 
-                            <ErrorMessage
-                                name="mobile"
-                                component="span"
-                                className="mt-1 block text-12 text-red-500"
-                            />
+                            {renderError("mobile")}
                         </div>
 
 
@@ -580,11 +574,7 @@ function FromToLocation({ modifyTripData, homeLayout = false }) {
                                     />
                                 </div>
 
-                                <ErrorMessage
-                                    name="return_date"
-                                    component="span"
-                                    className="mt-1 block text-12 text-red-500"
-                                />
+                                {renderError("return_date")}
                             </div>
                         )}
                     </div>
