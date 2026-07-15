@@ -6,9 +6,13 @@ import { carOptions } from "../data/carOptions";
 import FromToLocation from "../components/FromToLocation";
 
 const SelectCar = () => {
-
+   const location = useLocation();
+   console.log("location-----",location);
+   
     const { state } = useLocation();
     const navigate = useNavigate();
+
+
     const [showModifyForm, setShowModifyForm] = useState(false);
 
     // Static fallback data
@@ -21,6 +25,7 @@ const SelectCar = () => {
     };
 
     const trip = state?.trip || staticData;
+    console.log("select car page data",trip)
 
     const routeLabel = `${trip.origin_name} – ${trip.destinations?.[0]?.dest_name || ''}`;
 

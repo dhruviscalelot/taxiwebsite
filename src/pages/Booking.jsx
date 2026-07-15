@@ -31,6 +31,7 @@ const Booking = () => {
     };
 
     const trip = state?.trip || fallbackTrip;
+    console.log("trip--------------------", trip);
     const selectedCar = state?.car || carOptions[0];
     const destination = trip?.destinations?.[0]?.dest_name || "";
     const routeLabel = `${trip?.origin_name || ""} - ${destination}`;
@@ -68,8 +69,8 @@ const Booking = () => {
     const initialValues = {
         ...bookingFormInitialValues,
         mobile: trip?.mobile || "",
-        pickup_address: trip?.origin_name || "",
-        drop_address: destination,
+        // pickup_address: trip?.origin_name || "",
+        // drop_address: destination,
     };
 
     const validationSchema = Yup.object({
@@ -147,144 +148,144 @@ const Booking = () => {
             <main className="wrapper py-6 sm:py-8 lg:py-10">
                 <div className="flex flex-wrap -mx-2.5 xl:-mx-3.5">
                     <div className="w-full px-2.5 pb-5 lg:w-[55%] xl:px-3.5 xl:pb-7">
-                    <section className="rounded-[24px] bg-white p-4 shadow-card sm:p-5 lg:p-6">
-                        <div className="mb-4">
-                            <p className="text-12 font-bold uppercase tracking-wide text-g6">
-                                Traveller Details
-                            </p>
-                            <h2 className="mt-1 text-22 font-extrabold text-dark">
-                                Confirm Traveller Information
-                            </h2>
-                        </div>
+                        <section className="rounded-[24px] bg-white p-4 shadow-card sm:p-5 lg:p-6">
+                            <div className="mb-4">
+                                <p className="text-12 font-bold uppercase tracking-wide text-g6">
+                                    Traveller Details
+                                </p>
+                                <h2 className="mt-1 text-22 font-extrabold text-dark">
+                                    Confirm Traveller Information
+                                </h2>
+                            </div>
 
-                        <Formik
-                            initialValues={initialValues}
-                            validationSchema={validationSchema}
-                            onSubmit={handleSubmit}
-                            enableReinitialize
-                        >
-                            {() => (
-                                <Form>
-                                    <div className="flex flex-wrap -mx-2">
-                                        <div className="w-full px-2 pb-3 sm:w-1/2">
-                                            <label className="text-12 font-bold uppercase tracking-wide text-g6">
-                                                Name
-                                            </label>
-                                            <div className="relative">
-                                                <UserRound
-                                                    size={18}
-                                                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
-                                                />
-                                                <Field
+                            <Formik
+                                initialValues={initialValues}
+                                validationSchema={validationSchema}
+                                onSubmit={handleSubmit}
+                                enableReinitialize
+                            >
+                                {() => (
+                                    <Form>
+                                        <div className="flex flex-wrap -mx-2">
+                                            <div className="w-full px-2 pb-3 sm:w-1/2">
+                                                <label className="text-12 font-bold uppercase tracking-wide text-g6">
+                                                    Name
+                                                </label>
+                                                <div className="relative">
+                                                    <UserRound
+                                                        size={18}
+                                                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                                                    />
+                                                    <Field
+                                                        name="name"
+                                                        className="form_input mt-1.5 pl-11"
+                                                        placeholder="Enter user name"
+                                                    />
+                                                </div>
+                                                <ErrorMessage
                                                     name="name"
-                                                    className="form_input mt-1.5 pl-11"
-                                                    placeholder="Enter user name"
+                                                    component="span"
+                                                    className="mt-1 block text-12 text-red-500"
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="name"
-                                                component="span"
-                                                className="mt-1 block text-12 text-red-500"
-                                            />
-                                        </div>
 
-                                        <div className="w-full px-2 pb-3 sm:w-1/2">
-                                            <label className="text-12 font-bold uppercase tracking-wide text-g6">
-                                                Email
-                                            </label>
-                                            <div className="relative">
-                                                <Mail
-                                                    size={18}
-                                                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
-                                                />
-                                                <Field
+                                            <div className="w-full px-2 pb-3 sm:w-1/2">
+                                                <label className="text-12 font-bold uppercase tracking-wide text-g6">
+                                                    Email
+                                                </label>
+                                                <div className="relative">
+                                                    <Mail
+                                                        size={18}
+                                                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                                                    />
+                                                    <Field
+                                                        name="email"
+                                                        type="email"
+                                                        className="form_input mt-1.5 pl-11"
+                                                        placeholder="Enter email address"
+                                                    />
+                                                </div>
+                                                <ErrorMessage
                                                     name="email"
-                                                    type="email"
-                                                    className="form_input mt-1.5 pl-11"
-                                                    placeholder="Enter email address"
+                                                    component="span"
+                                                    className="mt-1 block text-12 text-red-500"
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="email"
-                                                component="span"
-                                                className="mt-1 block text-12 text-red-500"
-                                            />
-                                        </div>
 
-                                        <div className="w-full px-2 pb-3 sm:w-1/2">
-                                            <label className="text-12 font-bold uppercase tracking-wide text-g6">
-                                                Mobile Number
-                                            </label>
-                                            <div className="relative">
-                                                <Phone
-                                                    size={18}
-                                                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
-                                                />
-                                                <Field
+                                            <div className="w-full px-2 pb-3 sm:w-1/2">
+                                                <label className="text-12 font-bold uppercase tracking-wide text-g6">
+                                                    Mobile Number
+                                                </label>
+                                                <div className="relative">
+                                                    <Phone
+                                                        size={18}
+                                                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                                                    />
+                                                    <Field
+                                                        name="mobile"
+                                                        className="form_input mt-1.5 pl-11"
+                                                        placeholder="Enter mobile number"
+                                                    />
+                                                </div>
+                                                <ErrorMessage
                                                     name="mobile"
-                                                    className="form_input mt-1.5 pl-11"
-                                                    placeholder="Enter mobile number"
+                                                    component="span"
+                                                    className="mt-1 block text-12 text-red-500"
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="mobile"
-                                                component="span"
-                                                className="mt-1 block text-12 text-red-500"
-                                            />
-                                        </div>
 
-                                        <div className="w-full px-2 pb-3 sm:w-1/2">
-                                            <label className="text-12 font-bold uppercase tracking-wide text-g6">
-                                                Pickup Address
-                                            </label>
-                                            <div className="relative">
-                                                <MapPin
-                                                    size={18}
-                                                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
-                                                />
-                                                <Field
+                                            <div className="w-full px-2 pb-3 sm:w-1/2">
+                                                <label className="text-12 font-bold uppercase tracking-wide text-g6">
+                                                    Pickup Address
+                                                </label>
+                                                <div className="relative">
+                                                    <MapPin
+                                                        size={18}
+                                                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                                                    />
+                                                    <Field
+                                                        name="pickup_address"
+                                                        className="form_input mt-1.5 pl-11"
+                                                        placeholder="Enter pickup address"
+                                                    />
+                                                </div>
+                                                <ErrorMessage
                                                     name="pickup_address"
-                                                    className="form_input mt-1.5 pl-11"
-                                                    placeholder="Enter pickup address"
+                                                    component="span"
+                                                    className="mt-1 block text-12 text-red-500"
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="pickup_address"
-                                                component="span"
-                                                className="mt-1 block text-12 text-red-500"
-                                            />
-                                        </div>
 
-                                        <div className="w-full px-2 pb-3">
-                                            <label className="text-12 font-bold uppercase tracking-wide text-g6">
-                                                Drop Address
-                                            </label>
-                                            <div className="relative">
-                                                <MapPin
-                                                    size={18}
-                                                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
-                                                />
-                                                <Field
+                                            <div className="w-full px-2 pb-3">
+                                                <label className="text-12 font-bold uppercase tracking-wide text-g6">
+                                                    Drop Address
+                                                </label>
+                                                <div className="relative">
+                                                    <MapPin
+                                                        size={18}
+                                                        className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-primary"
+                                                    />
+                                                    <Field
+                                                        name="drop_address"
+                                                        className="form_input mt-1.5 pl-11"
+                                                        placeholder="Enter drop address"
+                                                    />
+                                                </div>
+                                                <ErrorMessage
                                                     name="drop_address"
-                                                    className="form_input mt-1.5 pl-11"
-                                                    placeholder="Enter drop address"
+                                                    component="span"
+                                                    className="mt-1 block text-12 text-red-500"
                                                 />
                                             </div>
-                                            <ErrorMessage
-                                                name="drop_address"
-                                                component="span"
-                                                className="mt-1 block text-12 text-red-500"
-                                            />
                                         </div>
-                                    </div>
 
-                                    <button type="submit" className="btn_primary mt-2">
-                                        Submit Booking
-                                    </button>
-                                </Form>
-                            )}
-                        </Formik>
-                    </section>
+                                        <button type="submit" className="btn_primary mt-2">
+                                            Submit Booking
+                                        </button>
+                                    </Form>
+                                )}
+                            </Formik>
+                        </section>
                     </div>
 
                     <aside className="w-full px-2.5 lg:w-[45%] xl:px-3.5">
@@ -317,7 +318,7 @@ const Booking = () => {
                                 {detailItems.map((item) => (
                                     <div
                                         key={item.label}
-                                        className="mt-3 flex items-start justify-between rounded-2xl border border-line bg-light px-4 py-3 first:mt-0"
+                                        className="mt-3 flex items-center justify-between rounded-2xl border border-line bg-light px-4 py-3 first:mt-0"
                                     >
                                         <div className="flex min-w-0 items-center text-g6">
                                             <span className="mr-3 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
@@ -327,7 +328,7 @@ const Booking = () => {
                                                 {item.label}
                                             </span>
                                         </div>
-                                        <p className="ml-4 max-w-[55%] text-right text-14 font-extrabold text-dark">
+                                        <p className="capitalize ml-4 max-w-[55%]  text-14 font-extrabold text-dark">
                                             {item.value}
                                         </p>
                                     </div>
@@ -356,9 +357,9 @@ const Booking = () => {
                                 {activeTabData.items.map((item) => (
                                     <div
                                         key={item}
-                                        className="mt-3 flex items-start rounded-2xl border border-line bg-light px-4 py-3 first:mt-0"
+                                        className="mt-3 flex items-center rounded-2xl border border-line bg-light px-4 py-3 first:mt-0"
                                     >
-                                        <span className="mr-3 mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-primary">
+                                        <span className="mr-3 mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full  text-primary">
                                             <CheckCircle2 size={17} />
                                         </span>
                                         <p className="text-[13px] font-semibold leading-6 text-g4">

@@ -229,12 +229,12 @@ function FromToLocation({ modifyTripData }) {
 
         const payload = {
             trip_type: values.trip_type,
-            origin_name: values.origin_name,
+            origin_name: values.origin_name, //from
             origin_lat: values.origin_lat,
             origin_lng: values.origin_lng,
             destinations: [
                 {
-                    dest_name: values.dest_name,
+                    dest_name: values.dest_name, //to
                     dest_lat: values.dest_lat,
                     dest_lng: values.dest_lng,
                 },
