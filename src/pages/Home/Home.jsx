@@ -503,7 +503,7 @@ const Home = () => {
                       key={item.title}
                       className="w-[85vw] min-w-[85vw] shrink-0 px-3 pb-8 sm:w-[48%] sm:min-w-[48%] lg:w-1/3 lg:min-w-0"
                     >
-                      <div className="group relative mx-auto max-w-[330px] pt-[120px]">
+                      <div className="group relative mx-auto h-[270px] max-w-[330px] pt-[120px]">
                         {/* Image */}
                         <div className="absolute left-0 top-0 h-[190px] w-full overflow-hidden bg-light">
                           {item.image ? (
